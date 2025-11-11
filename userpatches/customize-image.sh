@@ -1,18 +1,17 @@
+#!/bin/bash
+
+# First boot config
 touch /root/.no_rootfs_resize
+cp /tmp/overlay/not_logged_in_yet /root/.not_logged_in_yet
+cp /tmp/overlay/provisioning.sh /root/provisioning.sh
 
-apt install dosfstools
+apt install dosfstools cage lighttpd chromium
 
-touch /root/resize_data_partition.sh
-cat << EOF > /root/provisioning.sh
-storagedevice=findmnt / | awk -F" " '/\/dev\// {print $2"}
-umount /mnt/data
-echo "Expanding data partition ${storagedevice}"
-echo ", +" | sfdisk -N 2 ${storagedevice}p2
-echo "Resizing FAT32 filesystem"
-fatresize -s 100% ${storagedevice}p2
-echo "Done"
-echo "Shutting down in 5 seconds. Add media and configuration files to the data partition of the SD card."
-sleep 5
-EOF
-
-apt install cage lighttpd chromium
+# Set up Cage service
+mkdir -p /etc/systemd/system/
+cp /tmp/overlay/cage@.service /etc/systemd/system/cage@.service
+# PAM autologin
+mkdir -p /etc/pam.d/
+cp /tmp/overlay/pam-cage /etc/pam.d/cage
+# Set graphical target as default
+ln -s /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
