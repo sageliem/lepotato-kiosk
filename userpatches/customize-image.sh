@@ -5,7 +5,7 @@ touch /root/.no_rootfs_resize
 cp /tmp/overlay/not_logged_in_yet /root/.not_logged_in_yet
 cp /tmp/overlay/provisioning.sh /root/provisioning.sh
 
-apt install dosfstools cage lighttpd chromium
+apt install fatresize cage lighttpd chromium
 
 # Set up Cage service
 mkdir -p /etc/systemd/system/

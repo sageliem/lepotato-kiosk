@@ -2,7 +2,7 @@
 
 function prepare_image_size__add_data_freespace() {
   display_alert "HOOK: add_data_freespace"
-  declare -g EXTRA_ROOTFS_MIB_SIZE=64
+  declare -g EXTRA_ROOTFS_MIB_SIZE=512
   display_alert "Exiting hook"
 }
 
